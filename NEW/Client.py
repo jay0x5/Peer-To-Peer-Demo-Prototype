@@ -50,17 +50,10 @@ def crypto_to_fiat(): #Get BTC , Pay Fiat
    
     # print(pubKey)
     info = {"BTCREC":int(inpp_sell)}
-    print(info)
+
     encinfo = rsa.encrypt(str(info).encode('ascii'),pubKey)
-    print(encinfo)
-    print(type(encinfo))
+  
 
-    
-    #debugging, since the encinfo is empty on LP side
-    with open("encryption.txt","wb") as filenc:
-        filenc.write(encinfo)
-
-    # print(sys.getsizeof(encinfo)) #debugging
 
     #sending encinfo to LP
     s.sendall(str(encinfo).encode())
