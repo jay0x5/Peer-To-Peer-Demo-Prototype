@@ -50,7 +50,11 @@ def crypto_to_fiat(): #Get BTC , Pay Fiat
    
     # print(pubKey)
     info = {"BTCREC":int(inpp_sell)}
+    print(info)
     encinfo = rsa.encrypt(str(info).encode('ascii'),pubKey)
+    print(encinfo)
+    print(type(encinfo))
+
     
     #debugging, since the encinfo is empty on LP side
     with open("encryption.txt","wb") as filenc:
@@ -83,7 +87,7 @@ if __name__ == "__main__":
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.connect(('localhost', 50002))
 
-            inpp = input("[1]Crypto-To-Fiat\n""[2]Fiat-To-Crypto\nEnter: \n""[3]Exit: ")
+            inpp = input("[1]Crypto-To-Fiat\n""[2]Fiat-To-Crypto\n""[3]Exit:\nEnter:  ")
         
             if "1" in inpp:
                 crypto_to_fiat()
@@ -106,8 +110,7 @@ if __name__ == "__main__":
     
 '''Bugs:
 
-- Encrypted message is in some 'Scooby-Doo' Language which is non readable/non sendable over socket, since the data decoded on LP code is empty(I basically fucked up encryption)
-- I might have fucked up with the type conversions
-- I hate RSA Encryption, thanks
+-solved! atm
+- Imposter syndrome: i doubt that my code is not sus
 
 '''

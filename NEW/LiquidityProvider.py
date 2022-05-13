@@ -11,16 +11,36 @@ def verify_client():
 def exit_func():
     print("hmmmm")
 
-def get_info():
+def decrypt(ciphertext, key):
+    try:
+        return rsa.decrypt(ciphertext, key).decode('ascii')
+    except:
+        return False
+
+def get_info(privKey):
 
     while 1:
         try:   
             data = conn.recv(1024)
             datastr = data.decode()
-            # print(len(datastr)) #debugging
-            if len(datastr) == 0:
+            # print(datastr)
+            bytdata = bytes(datastr,encoding="ascii")
+            resdata = bytdata.decode('unicode-escape').encode('ISO-8859-1')
+            print(resdata)
+            slicing_byte_1 = resdata[:-1]
+            final_byte_data = slicing_byte_1[2:131]
+            print(final_byte_data)
+            print(len(final_byte_data))
+            # print(privKey)
+            print(type(final_byte_data))
+            # print(type(privKey))
+          
+            res = decrypt(final_byte_data,privKey)
+            print("decryption: " + str(res)) #res is 'False' for some reason
+           
+            if len(resdata) != 0:
                 break
-            # print(datastr) #prints empty, since we receive empty data
+           
         except:
             # print("Waiting...")
             pass
@@ -38,7 +58,7 @@ def send_pub_key(): #send public key to the client peer for encrypting the excha
 
     conn.sendall(public_key_str.encode())
    
-    get_info()
+    get_info(privKey)
 
 
 
