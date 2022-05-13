@@ -23,20 +23,18 @@ def get_info(privKey):
         try:   
             data = conn.recv(1024)
             datastr = data.decode()
-            # print(datastr)
+
+            #Doing Witchcraft formatting,encoding,decoding, do not ask how it works
+       
             bytdata = bytes(datastr,encoding="ascii")
             resdata = bytdata.decode('unicode-escape').encode('ISO-8859-1')
-            print(resdata)
+         
             slicing_byte_1 = resdata[:-1]
             final_byte_data = slicing_byte_1[2:131]
-            print(final_byte_data)
-            print(len(final_byte_data))
-            # print(privKey)
-            print(type(final_byte_data))
-            # print(type(privKey))
+            
           
             res = decrypt(final_byte_data,privKey)
-            print("decryption: " + str(res)) #res is 'False' for some reason
+            print("decryption: " + str(res)) #It works somehow!
            
             if len(resdata) != 0:
                 break
